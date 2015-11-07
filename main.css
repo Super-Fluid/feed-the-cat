@@ -1,3 +1,14 @@
-h1 {
+#recordButton {
+    min-width:300px;
+    min-height:100px;
+    border:5px solid #888;
+    background:#eee;
+    font-size:40px;
+    border-radius:10px;
+    padding:10px;
+}
 
+#logo {
+    height:150px;
+    margin-right:30px;
 }
