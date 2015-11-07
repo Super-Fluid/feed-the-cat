@@ -1,17 +1,17 @@
 // when the button is pressed
 function oneClick() {
     var moment = record();
+    
+    store(moment);
+    display(moment);
     // gps returns asynchronously so we must store in callback
     if ("geolocation" in navigator) {
-        $("#moments").prepend('<div id="waitingForGps'+moment.time+'">Waiting for GPS...</div>');
+        $("#gps"+moment.time).append('<div id="waitingForGPS'+moment.time+'">Waiting for GPS...</div>');
         navigator.geolocation.getCurrentPosition(function(position) {
-            moment.gps = position;
-            store(moment);
-            display(moment);
+            $("#waitingForGPS"+moment.time).remove();
+            $("#gps"+moment.time).append(position.coords.latitude+"  "+position.coords.longitude);
+            storeGPS(moment.time,position);
         });
-    } else {
-        store(moment);
-        display(moment);
     }
 }
 
@@ -34,14 +34,17 @@ function store(moment) {
 console.log("storing")
 }
 
+// store the GPS data
+function storeGPS(time,position) {
+console.log("storing gps")
+}
+
 // add a moment to the visible list of moments
 function display(moment) {
-console.log("displaying"+moment)
 $("#moments").prepend('<div class="moment">'+moment.timeString+
     '<div class="timestamp">'+moment.time+'</div>'+
     '<div class="gps">'+moment.gps.coords.latitude+"  "+moment.gps.coords.longitude+"</div>"+
     '</div>');
-$("#waitingForGps"+moment.time).remove();
 }
 
 // sort moments in REVERSE chronological order
