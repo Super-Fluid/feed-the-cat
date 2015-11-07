@@ -3,6 +3,7 @@ function oneClick() {
     var moment = record();
     // gps returns asynchronously so we must store in callback
     if ("geolocation" in navigator) {
+        $("#moments").prepend('<div id="waitingForGps'+moment.time+'">Waiting for GPS...</div>');
         navigator.geolocation.getCurrentPosition(function(position) {
             moment.gps = position;
             store(moment);
@@ -38,8 +39,9 @@ function display(moment) {
 console.log("displaying"+moment)
 $("#moments").prepend('<div class="moment">'+moment.timeString+
     '<div class="timestamp">'+moment.time+'</div>'+
-    '<div class="gps">'+moment.gps.position.coords.latitude+"  "+moment.gps.position.coords.longitude+"</div>"+
+    '<div class="gps">'+moment.gps.coords.latitude+"  "+moment.gps.coords.longitude+"</div>"+
     '</div>');
+$("#waitingForGps"+moment.time).remove();
 }
 
 // sort moments in REVERSE chronological order
