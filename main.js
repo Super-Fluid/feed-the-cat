@@ -43,8 +43,11 @@ console.log("storing gps")
 function display(moment) {
 $("#moments").prepend('<div class="moment">'+moment.timeString+
     '<div class="timestamp">'+moment.time+'</div>'+
-    '<div class="gps">'+moment.gps.coords.latitude+"  "+moment.gps.coords.longitude+"</div>"+
+    '<div class="gps" id="gps'+moment.time+'"></div>'+
+    'Add a photo: <input type="file" id="take-picture"'+moment.time+' accept="image/*">'+
+    '<img src="about:blank" alt="" id="show-picture"'+moment.time+'>'+
     '</div>');
+setupPictureOption(moment.time);
 }
 
 // sort moments in REVERSE chronological order
