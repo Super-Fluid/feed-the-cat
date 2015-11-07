@@ -1,13 +1,10 @@
 // when the button is pressed
 function oneClick() {
     var moment = record();
-console.log("recording");
     // gps returns asynchronously so we must store in callback
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
-console.log("got gps");
-            //do_something(position.coords.latitude, position.coords.longitude);
-            moment.gps = "GPS!"
+            moment.gps = position;
             store(moment);
             display(moment);
         });
@@ -39,10 +36,10 @@ console.log("storing")
 // add a moment to the visible list of moments
 function display(moment) {
 console.log("displaying"+moment)
-$("#moments").append('<div class="moment">'+moment.timeString+
+$("#moments").prepend('<div class="moment">'+moment.timeString+
     '<div class="timestamp">'+moment.time+'</div>'+
+    '<div class="gps">'+moment.gps.position.coords.latitude+"  "+moment.gps.position.coords.longitude+"</div>"+
     '</div>');
-sortMoments();
 }
 
 // sort moments in REVERSE chronological order
