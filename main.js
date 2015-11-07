@@ -1,15 +1,27 @@
 // when the button is pressed
 function oneClick() {
     var moment = record();
-    store(moment);
-    display(moment);
+console.log("recording");
+    // gps returns asynchronously so we must store in callback
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+console.log("got gps");
+            //do_something(position.coords.latitude, position.coords.longitude);
+            moment.gps = "GPS!"
+            store(moment);
+            display(moment);
+        });
+    } else {
+        store(moment);
+        display(moment);
+    }
 }
 
-// capture data from the camera, mic, gps, clock
+// capture data from the camera, mic, clock
 function record() {
-console.log("recording")
 var timeString = getDateTime();
 var time = Date.now();
+
 return {
      "pic":undefined
     ,"gps":undefined
