@@ -8,12 +8,14 @@ function oneClick() {
 // capture data from the camera, mic, gps, clock
 function record() {
 console.log("recording")
-var time = getDateTime();
+var timeString = getDateTime();
+var time = Date.now();
 return {
      "pic":undefined
     ,"gps":undefined
     ,"audio":undefined
-    ,"timeString":time
+    ,"timeString":timeString
+    ,"time":time
     }
 }
 
@@ -25,7 +27,19 @@ console.log("storing")
 // add a moment to the visible list of moments
 function display(moment) {
 console.log("displaying"+moment)
-$("#moments").append('<div class="moment">'+moment.timeString+'</div>');
+$("#moments").append('<div class="moment">'+moment.timeString+
+    '<div class="timestamp">'+moment.time+'</div>'+
+    '</div>');
+sortMoments();
+}
+
+// sort moments in REVERSE chronological order
+function sortMoments() {
+    var moments = $(".moment").sort(function(a, b) {
+    return Number($(b).find(".timestamp").text()) > Number($(a).find(".timestamp").text());
+    });
+    $("#moments").children().detach();
+    $("#moments").append(moments);
 }
 
 // retrive all data from the cookies

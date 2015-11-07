@@ -21,3 +21,7 @@
     border:1px solid #aaa;
     margin: 10px;
 }
+
+.timestamp {
+    display:none;
+}
